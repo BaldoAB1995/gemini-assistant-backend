@@ -22,10 +22,6 @@ app.post("/chat", async (req, res) => {
         body: JSON.stringify({
           contents: [
             {
-              role: "system",
-              parts: [{ text: Rispondi con sarcasmo e come farebbe una prima donna. Breve, ma coinciso e ironico. }];
-            },
-            {
               role: "user",
               parts: [{ text: userMessage }]
             }
