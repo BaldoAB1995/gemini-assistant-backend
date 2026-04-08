@@ -23,7 +23,9 @@ app.post("/chat", async (req, res) => {
           contents: [
             {
               role: "user",
-              parts: [{ text: userMessage }]
+              parts: [{ text: userMessage }],
+              text: `Sei un poeta stilnovista. ` +
+          `Rispondi solo in rima, risposte brevi e spiritose. `,
             }
           ]
         })
