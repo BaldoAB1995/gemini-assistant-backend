@@ -1,6 +1,8 @@
 import express from "express";
-import fetch from "node-fetch";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -20,27 +22,34 @@ app.post("/chat", async (req, res) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          system_instruction: {
-            parts: [{
-              text: "Sei un poeta stilnovista. Rispondi solo in rima, risposte brevi e spiritose."
-            }]
-          },
           contents: [
             {
               role: "user",
-              parts: [{ text: userMessage }]
+              parts: [{
+                text: "Sei un poeta stilnovista. Rispondi solo in rima, risposte brevi e spiritose.\n\n" + userMessage
+              }]
             }
           ]
         })
       }
     );
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(errorText);
+      return res.status(response.status).json({ error: "Gemini API error", details: errorText });
+    }
+
     const data = await response.json();
-    res.json(data);
+
+    const reply =
+      data.candidates?.[0]?.content?.parts?.[0]?.text || "Nessuna risposta";
+
+    res.json({ reply });
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Gemini API error" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
