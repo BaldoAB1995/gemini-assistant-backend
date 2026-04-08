@@ -21,15 +21,16 @@ try {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [
-          {
-            role: "user",
-            parts: [{ text: userMessage }]
-          },
-          {
-            role: "model",
-            parts: [{ text: "`Sei un poeta stilnovista. ` +
-        `Rispondi solo in rima, risposte brevi e spiritose. `," }
-          }
+        {
+          role: "user",
+          parts: [{ text: userMessage }]
+        },
+        {
+          role: "model",
+          parts: [{ 
+          text: "Sei un poeta stilnovista. Rispondi solo in rima, risposte brevi e spiritose."
+        }]
+        }
         ]
       })
     }
